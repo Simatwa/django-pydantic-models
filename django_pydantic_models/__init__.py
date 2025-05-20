@@ -65,7 +65,13 @@ def get_pydantic_type_and_constraints(field: models.Field) -> tuple:
 
 
 def django_model_to_pydantic(django_model_cls: Type[models.Model]):
-    """Convert Django model to Pydantic model."""
+    """Convert Django model to Pydantic model.
+    ```python
+        @django_model_to_pydantic(Book)
+        class BookOut:
+            ...
+    ```
+    """
     converted_models: Dict[Type[models.Model], Type[BaseModel]] = {}
 
     def wrapper(config_cls: Type) -> Type[BaseModel]:
@@ -196,13 +202,21 @@ def django_model_to_pydantic(django_model_cls: Type[models.Model]):
                 instance = args[0]
                 for name in selected_fields:
                     value = getattr(instance, name)
-                    if isinstance(all_fields[name], models.ManyToManyField):
+
+                    field_obj = all_fields[name]
+
+                    if isinstance(field_obj, models.ManyToManyField):
                         value = list(value.all())
+                    elif isinstance(field_obj, (models.ImageField, models.FileField)):
+                        value = getattr(value, "url", None) if value else None
+
                     kwargs.setdefault(name, value)
+
             elif args:
-                raise TypeError(
+                TypeError(
                     f"{self.__class__.__name__} accepts a Django model instance or keyword args only."
                 )
+
             super(self.__class__, self).__init__(**kwargs)
 
         final_model = type(
