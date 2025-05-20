@@ -2,7 +2,7 @@ from pathlib import Path
 
 from setuptools import setup
 
-INSTALL_REQUIRE = ["pydantic>=2.10.6", "django"]
+INSTALL_REQUIRE = ["pydantic", "django"]
 
 
 setup(
@@ -13,9 +13,7 @@ setup(
     maintainer="Smartwa",
     author_email="simatwacaleb@proton.me",
     description=(
-        """A lightweight utility that converts Django models into fully-typed Pydantic models,
-          supporting automatic field mapping, validation constraint and nested model generation 
-          for related fields"""
+        """A lightweight utility that converts Django models into fully-typed Pydantic models."""
     ),
     packages=["django_pydantic_models"],
     url="https://github.com/Simatwa/django-pydantic-models",

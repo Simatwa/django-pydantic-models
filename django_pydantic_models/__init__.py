@@ -43,8 +43,21 @@ pydantic_book = BookOut(title="New Book", author=AuthorOut(...))
 
 """
 
+from importlib import metadata
+
+try:
+    __version__ = metadata.version("django-pydantic-models")
+except metadata.PackageNotFoundError:
+    __version__ = "0.0.0"
+
 from django_pydantic_models.core import (
     django_model_to_pydantic,
     django_to_pydantic_model_mapping,
     get_pydantic_type_and_constraints,
 )
+
+__all__ = [
+    "django_model_to_pydantic",
+    "django_to_pydantic_model_mapping",
+    "get_pydantic_type_and_constraints",
+]
