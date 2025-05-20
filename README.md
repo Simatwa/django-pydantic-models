@@ -17,6 +17,9 @@
 - 🛠️ Add or exclude fields selectively using `__fields__` or `__exclude__`
 - 🚀 Ideal for FastAPI, data validation, or serialization needs
 
+> [!NOTE]
+> This is not a competitor to [djantic](https://github.com/jordaneremieff/djantic) but an optimiser for working around with FastAPI and Django while keeping the traditions - use of decorator - alive.
+
 ---
 
 ## 📦 Installation
